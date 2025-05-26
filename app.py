@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+it isfrom flask import Flask, request, jsonify
 from flask_cors import CORS
 from config import Config
 from models import db, Vehicle
@@ -7,7 +7,7 @@ app = Flask(__name__)
 app.config.from_object(Config)
 
 # Allow access only from frontend port
-CORS(app, resources={r"/*": {"origins": "http://localhost:5173"}})
+CORS(app, resources={r"/*": {"origins": "http://localhost:5174"}})
 
 db.init_app(app)
 
