@@ -61,8 +61,8 @@ def delete_vehicle(id):
 
 @app.route("/trips", methods=["POST"])
 def create_trip():
-    print("RECEIVED:", data)
     data = request.get_json()
+    print("INCOMING TRIP DATA:", data)
     new_trip = Trip(
         date=data.get("date"),
         vehicle_id=data.get("vehicle_id"),
@@ -76,6 +76,9 @@ def create_trip():
     db.session.add(new_trip)
     db.session.commit()
     return jsonify({"message": "Trip logged successfully"}), 201
+    except Exception as e:
+        print("TRIP SAVE ERROR:", e)  # <-- log the actual error
+        return jsonify({"error": str(e)}), 500
 
 @app.route("/trips", methods=["GET"])
 def get_trips():
