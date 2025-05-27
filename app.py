@@ -61,6 +61,7 @@ def delete_vehicle(id):
 
 @app.route("/trips", methods=["POST"])
 def create_trip():
+    print("RECEIVED:", data)
     data = request.get_json()
     new_trip = Trip(
         date=data.get("date"),
