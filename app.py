@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from config import Config
-from models import db, Vehicle
+from models import db, Vehicle, Trip
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -58,6 +58,23 @@ def delete_vehicle(id):
     db.session.delete(vehicle)
     db.session.commit()
     return jsonify({"message": "Vehicle deleted successfully"})
+
+@app.route("/trips", methods=["POST"])
+def log_trip():
+    data = request.get_json()
+    new_trip = Trip(
+        vehicle_id=data["vehicle_id"],
+        trip_date=data["trip_date"],
+        driver=data["driver"],
+        start_mileage=data["start_mileage"],
+        end_mileage=data["end_mileage"],
+        fuel_estimate=data.get("fuel_estimate", 0),
+        destination=data["destination"],
+        damage_notes=data.get("damage_notes", "")
+    )
+    db.session.add(new_trip)
+    db.session.commit()
+    return jsonify({"message": "Trip logged successfully"}), 201
 
 if __name__ == "__main__":
     with app.app_context():
