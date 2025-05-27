@@ -62,14 +62,13 @@ def delete_vehicle(id):
 @app.route("/trips", methods=["POST"])
 def create_trip():
     data = request.get_json()
-    print("Received trip data:", data)
     new_trip = Trip(
-        vehicle_id=data["vehicle_id"],
-        date=data["date"],
-        driver=data.get("driver", ""),
-        start_mileage=data["start_mileage"],
-        end_mileage=data["end_mileage"],
+        date=data.get("date"),
+        vehicle_id=data.get("vehicle_id"),
+        start_mileage=data.get("start_mileage"),
+        end_mileage=data.get("end_mileage"),
         fuel=data.get("fuel"),
+        driver=data.get("driver"),
         trip_details=data.get("trip_details"),
         damage=data.get("damage")
     )

@@ -17,6 +17,7 @@ class Trip(db.Model):
     start_mileage = db.Column(db.Integer, nullable=False)
     end_mileage = db.Column(db.Integer, nullable=False)
     fuel = db.Column(db.Float, nullable=True)
+    driver = db.Column(db.String(100))
     trip_details = db.Column(db.String(255), nullable=True)
     damage = db.Column(db.String(255), nullable=True)
 
