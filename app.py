@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+CORS(app, resources={r"/*": {"origins": "*"}})
 from config import Config
 from models import db, Vehicle, Trip
 
@@ -62,6 +63,7 @@ def delete_vehicle(id):
 @app.route("/trips", methods=["POST"])
 def create_trip():
     data = request.get_json()
+    print("Received trip data:", data)
     new_trip = Trip(
         vehicle_id=data["vehicle_id"],
         date=data["date"],
