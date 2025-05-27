@@ -60,21 +60,38 @@ def delete_vehicle(id):
     return jsonify({"message": "Vehicle deleted successfully"})
 
 @app.route("/trips", methods=["POST"])
-def log_trip():
+def create_trip():
     data = request.get_json()
     new_trip = Trip(
         vehicle_id=data["vehicle_id"],
-        trip_date=data["trip_date"],
+        date=data["date"],
         driver=data["driver"],
         start_mileage=data["start_mileage"],
         end_mileage=data["end_mileage"],
-        fuel_estimate=data.get("fuel_estimate", 0),
-        destination=data["destination"],
-        damage_notes=data.get("damage_notes", "")
+        fuel=data.get("fuel"),
+        trip_details=data.get("trip_details"),
+        damage=data.get("damage")
     )
     db.session.add(new_trip)
     db.session.commit()
     return jsonify({"message": "Trip logged successfully"}), 201
+
+@app.route("/trips", methods=["GET"])
+def get_trips():
+    trips = Trip.query.all()
+    return jsonify([
+        {
+            "id": t.id,
+            "vehicle_id": t.vehicle_id,
+            "date": t.date,
+            "driver": t.driver,
+            "start_mileage": t.start_mileage,
+            "end_mileage": t.end_mileage,
+            "fuel": t.fuel,
+            "trip_details": t.trip_details,
+            "damage": t.damage
+        } for t in trips
+    ])
 
 if __name__ == "__main__":
     with app.app_context():
