@@ -66,7 +66,7 @@ def create_trip():
     new_trip = Trip(
         vehicle_id=data["vehicle_id"],
         date=data["date"],
-        driver=data["driver"],
+        driver=data.get("driver", ""),
         start_mileage=data["start_mileage"],
         end_mileage=data["end_mileage"],
         fuel=data.get("fuel"),
